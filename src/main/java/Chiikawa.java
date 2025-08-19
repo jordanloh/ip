@@ -33,13 +33,13 @@ public class Chiikawa {
             else if (command.equalsIgnoreCase("mark")) {
                 int index = Integer.parseInt(parts[1]) - 1;
                 arr[index].markAsDone();
-                System.out.println("I've marked this task as done ~nya! : ");
+                System.out.println("I've marked this task as done ~nya! :");
                 System.out.println(arr[index].toString());
             }
             else if (command.equalsIgnoreCase("unmark")) {
                 int index = Integer.parseInt(parts[1]) - 1;
                 arr[index].markAsUndone();
-                System.out.println("I've marked this task as not done yet ~nya! : ");
+                System.out.println("I've marked this task as not done yet ~nya! :");
                 System.out.println(arr[index].toString());
             }
             else {
@@ -53,7 +53,7 @@ public class Chiikawa {
                         arr[counter++] = new Deadline(deadlineParts[0], deadlineParts[1]);
                         break;
                     case "event":
-                        String[] eventParts = parts[1].split(" /from | /to", 3);
+                        String[] eventParts = parts[1].split(" /from | /to ", 3);
                         arr[counter++] = new Event(eventParts[0], eventParts[1], eventParts[2]);
                         break;
                 }

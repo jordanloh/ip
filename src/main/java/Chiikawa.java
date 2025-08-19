@@ -47,6 +47,12 @@ public class Chiikawa {
                         }
                         chiikawa.unmarkTask(Integer.parseInt(parts[1]) - 1);
                         break;
+                    case "delete":
+                        if (parts.length < 2) {
+                            throw new NoIndexException();
+                        }
+                        chiikawa.deleteTask(Integer.parseInt(parts[1]) - 1);
+                        break;
                     case "todo":
                         if (parts.length < 2 || parts[1].isBlank()) {
                             throw new EmptyDescriptionException();
@@ -131,6 +137,17 @@ public class Chiikawa {
         arr.add(new Event(parts[0], parts[1], parts[2]));
         System.out.println("I've added in this task ~nya! : ");
         System.out.println(arr.get(arr.size() - 1));
+        System.out.println("Now you have " + arr.size() + " tasks in the list.");
+    }
+
+    public void deleteTask(int index) throws ChiikawaException {
+        if (index < 0 || index >= arr.size()) {
+            throw new IndexOutOfBoundException();
+        }
+        Task task = arr.get(index);
+        arr.remove(index);
+        System.out.println("I've removed this task ~nya! : ");
+        System.out.println(task.toString());
         System.out.println("Now you have " + arr.size() + " tasks in the list.");
     }
 }

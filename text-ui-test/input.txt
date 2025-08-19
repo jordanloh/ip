@@ -1,0 +1,9 @@
+todo buy groceries
+deadline cook dinner /by 6pm today
+event dinner /from Aug 19 6pm /to 8pm
+mark 1
+list
+unmark 1
+mark 3
+list
+bye

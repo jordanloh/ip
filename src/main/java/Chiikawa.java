@@ -20,52 +20,57 @@ public class Chiikawa {
             if (input.isEmpty()) continue;
 
             String[] parts = input.split(" ", 2);
-            String command = parts[0];
-
+            Command command;
             System.out.println(divider);
 
             try {
-                if (command.equalsIgnoreCase("bye")) {
+                try {
+                    command = Command.valueOf(parts[0].toLowerCase());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Oh no! I don't recognise that command :(!");
+                    System.out.println(divider);
+                    continue;
+                }
+                if (command == Command.bye) {
                     System.out.println("Byebye!! See you again soon nya~!");
                     System.out.println(divider);
                     break;
                 }
-
                 switch (command) {
-                    case "list":
+                    case list:
                         chiikawa.listTasks();
                         break;
-                    case "mark":
+                    case mark:
                         if (parts.length < 2) {
                             throw new NoIndexException();
                         }
                         chiikawa.markTask(Integer.parseInt(parts[1]) - 1);
                         break;
-                    case "unmark":
+                    case unmark:
                         if (parts.length < 2) {
                             throw new NoIndexException();
                         }
                         chiikawa.unmarkTask(Integer.parseInt(parts[1]) - 1);
                         break;
-                    case "delete":
+                    case delete:
                         if (parts.length < 2) {
                             throw new NoIndexException();
                         }
                         chiikawa.deleteTask(Integer.parseInt(parts[1]) - 1);
                         break;
-                    case "todo":
+                    case todo:
                         if (parts.length < 2 || parts[1].isBlank()) {
                             throw new EmptyDescriptionException();
                         }
                         chiikawa.addTodo(parts[1].trim());
                         break;
-                    case "deadline":
+                    case deadline:
                         if (parts.length < 2 || parts[1].isBlank()) {
                             throw new EmptyDescriptionException();
                         }
                         chiikawa.addDeadline(parts[1].trim());
                         break;
-                    case "event":
+                    case event:
                         if (parts.length < 2 || parts[1].isBlank()) {
                             throw new EmptyDescriptionException();
                         }

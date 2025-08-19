@@ -36,9 +36,15 @@ public class Chiikawa {
                         chiikawa.listTasks();
                         break;
                     case "mark":
+                        if (parts.length < 2) {
+                            throw new NoIndexException();
+                        }
                         chiikawa.markTask(Integer.parseInt(parts[1]) - 1);
                         break;
                     case "unmark":
+                        if (parts.length < 2) {
+                            throw new NoIndexException();
+                        }
                         chiikawa.unmarkTask(Integer.parseInt(parts[1]) - 1);
                         break;
                     case "todo":

@@ -1,10 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Chiikawa {
     private static final String name = "Chiikawa";
-    private static final String divider = "----------------------------------";
-    private Task[] arr = new Task[100];
-    private int counter = 0;
+    private static final String divider = "------------------------------------------";
+    private ArrayList<Task> arr = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -73,37 +73,37 @@ public class Chiikawa {
     }
 
     public void listTasks() throws ChiikawaException {
-        if (this.counter == 0) {
+        if (arr.isEmpty()) {
             throw new ListEmptyException();
         }
-        for (int i = 1; i <= counter; i++) {
-            System.out.println(i + ". " + arr[i - 1]);
+        for (int i = 1; i <= arr.size(); i++) {
+            System.out.println(i + ". " + arr.get(i - 1));
         }
     }
 
     public void markTask(int index) throws ChiikawaException {
-        if (index < 0 || index >= counter) {
+        if (index < 0 || index >= arr.size()) {
             throw new IndexOutOfBoundException();
         }
-        arr[index].markAsDone();
+        arr.get(index).markAsDone();
         System.out.println("I've marked this task as done ~nya! : ");
-        System.out.println(arr[index]);
+        System.out.println(arr.get(index));
     }
 
     public void unmarkTask(int index) throws ChiikawaException {
-        if (index < 0 || index >= counter) {
+        if (index < 0 || index >= arr.size()) {
             throw new IndexOutOfBoundException();
         }
-        arr[index].markAsUndone();
+        arr.get(index).markAsUndone();
         System.out.println("I've marked this task as not done yet ~nya! : ");
-        System.out.println(arr[index]);
+        System.out.println(arr.get(index));
     }
 
     public void addTodo(String description) {
-        arr[counter++] = new Todo(description);
+        arr.add(new Todo(description));
         System.out.println("I've added in this task ~nya! : ");
-        System.out.println(arr[counter - 1]);
-        System.out.println("Now you have " + counter + " tasks in the list.");
+        System.out.println(arr.get(arr.size() - 1));
+        System.out.println("Now you have " + arr.size() + " tasks in the list.");
     }
 
     public void addDeadline(String input) throws ChiikawaException {
@@ -111,10 +111,10 @@ public class Chiikawa {
         if (parts.length < 2 || parts[0].isBlank() || parts[1].isBlank()) {
             throw new NoDeadlineException();
         }
-        arr[counter++] = new Deadline(parts[0], parts[1]);
+        arr.add(new Deadline(parts[0], parts[1]));
         System.out.println("I've added in this task ~nya! : ");
-        System.out.println(arr[counter - 1]);
-        System.out.println("Now you have " + counter + " tasks in the list.");
+        System.out.println(arr.get(arr.size() - 1));
+        System.out.println("Now you have " + arr.size() + " tasks in the list.");
     }
 
     public void addEvent(String input) throws ChiikawaException {
@@ -122,9 +122,9 @@ public class Chiikawa {
         if (parts.length < 3 || parts[0].isBlank() || parts[1].isBlank() || parts[2].isBlank()) {
             throw new NoEventException();
         }
-        arr[counter++] = new Event(parts[0], parts[1], parts[2]);
+        arr.add(new Event(parts[0], parts[1], parts[2]));
         System.out.println("I've added in this task ~nya! : ");
-        System.out.println(arr[counter - 1]);
-        System.out.println("Now you have " + counter + " tasks in the list.");
+        System.out.println(arr.get(arr.size() - 1));
+        System.out.println("Now you have " + arr.size() + " tasks in the list.");
     }
 }

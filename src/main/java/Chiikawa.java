@@ -37,47 +37,47 @@ public class Chiikawa {
                     break;
                 }
                 switch (command) {
-                    case list:
-                        chiikawa.listTasks();
-                        break;
-                    case mark:
-                        if (parts.length < 2) {
-                            throw new NoIndexException();
-                        }
-                        chiikawa.markTask(Integer.parseInt(parts[1]) - 1);
-                        break;
-                    case unmark:
-                        if (parts.length < 2) {
-                            throw new NoIndexException();
-                        }
-                        chiikawa.unmarkTask(Integer.parseInt(parts[1]) - 1);
-                        break;
-                    case delete:
-                        if (parts.length < 2) {
-                            throw new NoIndexException();
-                        }
-                        chiikawa.deleteTask(Integer.parseInt(parts[1]) - 1);
-                        break;
-                    case todo:
-                        if (parts.length < 2 || parts[1].isBlank()) {
-                            throw new EmptyDescriptionException();
-                        }
-                        chiikawa.addTodo(parts[1].trim());
-                        break;
-                    case deadline:
-                        if (parts.length < 2 || parts[1].isBlank()) {
-                            throw new EmptyDescriptionException();
-                        }
-                        chiikawa.addDeadline(parts[1].trim());
-                        break;
-                    case event:
-                        if (parts.length < 2 || parts[1].isBlank()) {
-                            throw new EmptyDescriptionException();
-                        }
-                        chiikawa.addEvent(parts[1].trim());
-                        break;
-                    default:
-                        throw new ChiikawaException("Oh no! I don't recognise that command :(!");
+                case list:
+                    chiikawa.listTasks();
+                    break;
+                case mark:
+                    if (parts.length < 2) {
+                        throw new NoIndexException();
+                    }
+                    chiikawa.markTask(Integer.parseInt(parts[1]) - 1);
+                    break;
+                case unmark:
+                    if (parts.length < 2) {
+                        throw new NoIndexException();
+                    }
+                    chiikawa.unmarkTask(Integer.parseInt(parts[1]) - 1);
+                    break;
+                case delete:
+                    if (parts.length < 2) {
+                        throw new NoIndexException();
+                    }
+                    chiikawa.deleteTask(Integer.parseInt(parts[1]) - 1);
+                    break;
+                case todo:
+                    if (parts.length < 2 || parts[1].isBlank()) {
+                        throw new EmptyDescriptionException();
+                    }
+                    chiikawa.addTodo(parts[1].trim());
+                    break;
+                case deadline:
+                    if (parts.length < 2 || parts[1].isBlank()) {
+                        throw new EmptyDescriptionException();
+                    }
+                    chiikawa.addDeadline(parts[1].trim());
+                    break;
+                case event:
+                    if (parts.length < 2 || parts[1].isBlank()) {
+                        throw new EmptyDescriptionException();
+                    }
+                    chiikawa.addEvent(parts[1].trim());
+                    break;
+                default:
+                    throw new ChiikawaException("Oh no! I don't recognise that command :(!");
                 }
             } catch (ChiikawaException e) {
                 System.out.println(e.getMessage());

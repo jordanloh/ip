@@ -11,7 +11,7 @@ public class Event extends Task {
 
     @Override
     public String saveFormat() {
-        return "E | " + getStatusIcon() + " | " + description + " | " + from + " | " + to;
+        return "E | " + getIsDone() + " | " + description + " | " + from + " | " + to;
     }
 
     @Override

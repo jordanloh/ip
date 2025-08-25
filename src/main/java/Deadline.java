@@ -9,7 +9,7 @@ public class Deadline extends Task {
 
     @Override
     public String saveFormat() {
-        return "D | " + getStatusIcon() + " | " + description + " | " + by;
+        return "D | " + getIsDone() + " | " + description + " | " + by;
     }
 
     @Override

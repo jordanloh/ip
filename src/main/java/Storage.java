@@ -61,13 +61,13 @@ public class Storage {
                 }
                 return t;
             case "D":
-                Task d = new Deadline(description, parts[3]);
+                Task d = new Deadline(description, Parser.parseDateTime(parts[3]));
                 if (isDone) {
-                    d.markAsDone();;
+                    d.markAsDone();
                 }
                 return d;
             case "E":
-                Task e = new Event(description, parts[3], parts[4]);
+                Task e = new Event(description, Parser.parseDateTime(parts[3]), Parser.parseDateTime(parts[4]));
                 if (isDone) {
                     e.markAsDone();
                 }

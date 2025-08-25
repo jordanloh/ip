@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.nio.file.Path;
@@ -138,7 +141,12 @@ public class Chiikawa {
         if (parts.length < 2 || parts[0].isBlank() || parts[1].isBlank()) {
             throw new NoDeadlineException();
         }
-        arr.add(new Deadline(parts[0], parts[1]));
+        try {
+            arr.add(new Deadline(parts[0], Parser.parseDateTime(parts[1])));
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800");
+            return;
+        }
         storage.save(arr);
         System.out.println("I've added in this task ~nya! : ");
         System.out.println(arr.get(arr.size() - 1));
@@ -150,7 +158,12 @@ public class Chiikawa {
         if (parts.length < 3 || parts[0].isBlank() || parts[1].isBlank() || parts[2].isBlank()) {
             throw new NoEventException();
         }
-        arr.add(new Event(parts[0], parts[1], parts[2]));
+        try {
+            arr.add(new Event(parts[0], Parser.parseDateTime(parts[1]), Parser.parseDateTime(parts[2])));
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800");
+            return;
+        }
         storage.save(arr);
         System.out.println("I've added in this task ~nya! : ");
         System.out.println(arr.get(arr.size() - 1));
@@ -168,4 +181,5 @@ public class Chiikawa {
         System.out.println(task.toString());
         System.out.println("Now you have " + arr.size() + " tasks in the list.");
     }
+
 }

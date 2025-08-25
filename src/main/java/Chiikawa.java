@@ -1,13 +1,9 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.nio.file.Path;
 
 public class Chiikawa {
-    private static final String name = "Chiikawa";
-    private static final String divider = "------------------------------------------";
+    private Ui ui = new Ui();
     private ArrayList<Task> arr;
     private Storage storage;
 
@@ -15,36 +11,31 @@ public class Chiikawa {
         storage = new Storage(filePath);
         arr = storage.load();
     }
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
+    public void run() {
         Path path = java.nio.file.Paths.get( "data", "Chiikawa.txt");
         Chiikawa chiikawa = new Chiikawa(path);
 
-        System.out.println(divider);
-        System.out.println("Hewwo! I'm " + name + "!!");
-        System.out.println("What can I do for you nya~?");
-        System.out.println(divider);
+        ui.showWelcome();
 
         while (true) {
-            String input = sc.nextLine().trim();
-            if (input.isEmpty()) continue;
+            String input = ui.readCommand();
 
             String[] parts = input.split(" ", 2);
             Command command;
-            System.out.println(divider);
+            ui.showDivider();
 
             try {
                 try {
                     command = Command.valueOf(parts[0].toLowerCase());
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Oh no! I don't recognise that command :(!");
-                    System.out.println(divider);
+                    ui.showMessage("Oh no! I don't recognise that command :(!");
+                    ui.showDivider();
                     continue;
                 }
                 if (command == Command.bye) {
-                    System.out.println("Byebye!! See you again soon nya~!");
-                    System.out.println(divider);
+                    ui.showMessage("Byebye!! See you again soon nya~!");
+                    ui.showDivider();
                     break;
                 }
                 switch (command) {
@@ -91,21 +82,24 @@ public class Chiikawa {
                     throw new ChiikawaException("Oh no! I don't recognise that command :(!");
                 }
             } catch (ChiikawaException e) {
-                System.out.println(e.getMessage());
+                ui.showMessage(e.getMessage());
             }
-            System.out.println(divider);
+            ui.showDivider();
         }
 
-        sc.close();
+        ui.close();
+    }
+    public static void main(String[] args) {
+        Path path = java.nio.file.Paths.get( "data", "Chiikawa.txt");
+        Chiikawa chiikawa = new Chiikawa(path);
+        chiikawa.run();
     }
 
     public void listTasks() throws ChiikawaException {
         if (arr.isEmpty()) {
             throw new ListEmptyException();
         }
-        for (int i = 1; i <= arr.size(); i++) {
-            System.out.println(i + ". " + arr.get(i - 1));
-        }
+        ui.showListTasks(arr);
     }
 
     public void markTask(int index) throws ChiikawaException {
@@ -114,8 +108,7 @@ public class Chiikawa {
         }
         arr.get(index).markAsDone();
         storage.save(arr);
-        System.out.println("I've marked this task as done ~nya! : ");
-        System.out.println(arr.get(index));
+        ui.showTaskMarked(arr.get(index));
     }
 
     public void unmarkTask(int index) throws ChiikawaException {
@@ -124,16 +117,13 @@ public class Chiikawa {
         }
         arr.get(index).markAsUndone();
         storage.save(arr);
-        System.out.println("I've marked this task as not done yet ~nya! : ");
-        System.out.println(arr.get(index));
+        ui.showTaskUnmarked(arr.get(index));
     }
 
     public void addTodo(String description) {
         arr.add(new Todo(description));
         storage.save(arr);
-        System.out.println("I've added in this task ~nya! : ");
-        System.out.println(arr.get(arr.size() - 1));
-        System.out.println("Now you have " + arr.size() + " tasks in the list.");
+        ui.showTaskAdded(arr.get(arr.size() - 1), arr.size());
     }
 
     public void addDeadline(String input) throws ChiikawaException {
@@ -144,13 +134,11 @@ public class Chiikawa {
         try {
             arr.add(new Deadline(parts[0], Parser.parseDateTime(parts[1])));
         } catch (DateTimeParseException e) {
-            System.out.println("Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800");
+            ui.showMessage("Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800");
             return;
         }
         storage.save(arr);
-        System.out.println("I've added in this task ~nya! : ");
-        System.out.println(arr.get(arr.size() - 1));
-        System.out.println("Now you have " + arr.size() + " tasks in the list.");
+        ui.showTaskAdded(arr.get(arr.size() - 1), arr.size());
     }
 
     public void addEvent(String input) throws ChiikawaException {
@@ -161,13 +149,11 @@ public class Chiikawa {
         try {
             arr.add(new Event(parts[0], Parser.parseDateTime(parts[1]), Parser.parseDateTime(parts[2])));
         } catch (DateTimeParseException e) {
-            System.out.println("Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800");
+            ui.showMessage("Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800");
             return;
         }
         storage.save(arr);
-        System.out.println("I've added in this task ~nya! : ");
-        System.out.println(arr.get(arr.size() - 1));
-        System.out.println("Now you have " + arr.size() + " tasks in the list.");
+        ui.showTaskAdded(arr.get(arr.size() - 1), arr.size());
     }
 
     public void deleteTask(int index) throws ChiikawaException {
@@ -177,9 +163,6 @@ public class Chiikawa {
         Task task = arr.get(index);
         arr.remove(index);
         storage.save(arr);
-        System.out.println("I've removed this task ~nya! : ");
-        System.out.println(task.toString());
-        System.out.println("Now you have " + arr.size() + " tasks in the list.");
+        ui.showTaskRemoved(task, arr.size());
     }
-
 }

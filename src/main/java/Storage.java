@@ -12,6 +12,8 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    private Ui ui = new Ui();
+
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -31,7 +33,7 @@ public class Storage {
                 }
             }
         } catch (IOException e) {
-            System.out.println("I cannot read the file! >_<");
+            ui.showMessage("I cannot read the file! >_<");
         }
         return tasks;
     }
@@ -42,7 +44,7 @@ public class Storage {
                 fw.write(task.saveFormat() + System.lineSeparator());
             }
         } catch (IOException e) {
-            System.out.println("I cannot save to the file! >_<");
+            ui.showMessage("I cannot save to the file! >_<");
         }
     }
 
@@ -76,7 +78,7 @@ public class Storage {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Something went wrong! >_<");
+            ui.showMessage("Something went wrong! >_<");
             return null;
         }
     }

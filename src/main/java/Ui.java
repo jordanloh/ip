@@ -52,9 +52,9 @@ public class Ui {
         System.out.println(task.toString());
     }
 
-    public void showListTasks(ArrayList<Task> arr) {
-        for (int i = 1; i <= arr.size(); i++) {
-            System.out.println(i + ". " + arr.get(i - 1));
+    public void showListTasks(TaskList tasks) {
+        for (int i = 1; i <= tasks.size(); i++) {
+            System.out.println(i + ". " + tasks.getTask(i - 1));
         }
     }
 

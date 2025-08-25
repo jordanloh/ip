@@ -4,12 +4,12 @@ import java.nio.file.Path;
 
 public class Chiikawa {
     private Ui ui = new Ui();
-    private ArrayList<Task> arr;
+    private TaskList tasks;
     private Storage storage;
 
     public Chiikawa(Path filePath) {
         storage = new Storage(filePath);
-        arr = storage.load();
+        tasks = new TaskList(storage.load());
     }
 
     public void run() {
@@ -81,34 +81,34 @@ public class Chiikawa {
     }
 
     public void listTasks() throws ChiikawaException {
-        if (arr.isEmpty()) {
+        if (tasks.size() == 0) {
             throw new ListEmptyException();
         }
-        ui.showListTasks(arr);
+        ui.showListTasks(tasks);
     }
 
     public void markTask(int index) throws ChiikawaException {
-        if (index < 0 || index >= arr.size()) {
+        if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundException();
         }
-        arr.get(index).markAsDone();
-        storage.save(arr);
-        ui.showTaskMarked(arr.get(index));
+        tasks.getTask(index).markAsDone();
+        storage.save(tasks.getAllTasks());
+        ui.showTaskMarked(tasks.getTask(index));
     }
 
     public void unmarkTask(int index) throws ChiikawaException {
-        if (index < 0 || index >= arr.size()) {
+        if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundException();
         }
-        arr.get(index).markAsUndone();
-        storage.save(arr);
-        ui.showTaskUnmarked(arr.get(index));
+        tasks.getTask(index).markAsUndone();
+        storage.save(tasks.getAllTasks());
+        ui.showTaskUnmarked(tasks.getTask(index));
     }
 
     public void addTodo(String description) {
-        arr.add(new Todo(description));
-        storage.save(arr);
-        ui.showTaskAdded(arr.get(arr.size() - 1), arr.size());
+        tasks.addTask(new Todo(description));
+        storage.save(tasks.getAllTasks());
+        ui.showTaskAdded(tasks.getTask(tasks.size() - 1), tasks.size());
     }
 
     public void addDeadline(String input) throws ChiikawaException {
@@ -117,13 +117,13 @@ public class Chiikawa {
             throw new NoDeadlineException();
         }
         try {
-            arr.add(new Deadline(parts[0], Parser.parseDateTime(parts[1])));
+            tasks.addTask(new Deadline(parts[0], Parser.parseDateTime(parts[1])));
         } catch (DateTimeParseException e) {
             ui.showMessage("Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800");
             return;
         }
-        storage.save(arr);
-        ui.showTaskAdded(arr.get(arr.size() - 1), arr.size());
+        storage.save(tasks.getAllTasks());
+        ui.showTaskAdded(tasks.getTask(tasks.size() - 1), tasks.size());
     }
 
     public void addEvent(String input) throws ChiikawaException {
@@ -132,22 +132,22 @@ public class Chiikawa {
             throw new NoEventException();
         }
         try {
-            arr.add(new Event(parts[0], Parser.parseDateTime(parts[1]), Parser.parseDateTime(parts[2])));
+            tasks.addTask(new Event(parts[0], Parser.parseDateTime(parts[1]), Parser.parseDateTime(parts[2])));
         } catch (DateTimeParseException e) {
             ui.showMessage("Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800");
             return;
         }
-        storage.save(arr);
-        ui.showTaskAdded(arr.get(arr.size() - 1), arr.size());
+        storage.save(tasks.getAllTasks());
+        ui.showTaskAdded(tasks.getTask(tasks.size() - 1), tasks.size());
     }
 
     public void deleteTask(int index) throws ChiikawaException {
-        if (index < 0 || index >= arr.size()) {
+        if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundException();
         }
-        Task task = arr.get(index);
-        arr.remove(index);
-        storage.save(arr);
-        ui.showTaskRemoved(task, arr.size());
+        Task task = tasks.getTask(index);
+        tasks.deleteTask(index);
+        storage.save(tasks.getAllTasks());
+        ui.showTaskRemoved(task, tasks.size());
     }
 }

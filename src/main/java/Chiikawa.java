@@ -1,14 +1,22 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.nio.file.Path;
 
 public class Chiikawa {
     private static final String name = "Chiikawa";
     private static final String divider = "------------------------------------------";
-    private ArrayList<Task> arr = new ArrayList<>();
+    private ArrayList<Task> arr;
+    private Storage storage;
 
+    public Chiikawa(Path filePath) {
+        storage = new Storage(filePath);
+        arr = storage.load();
+    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Chiikawa chiikawa = new Chiikawa();
+
+        Path path = java.nio.file.Paths.get( "data", "Chiikawa.txt");
+        Chiikawa chiikawa = new Chiikawa(path);
 
         System.out.println(divider);
         System.out.println("Hewwo! I'm " + name + "!!");
@@ -82,7 +90,6 @@ public class Chiikawa {
             } catch (ChiikawaException e) {
                 System.out.println(e.getMessage());
             }
-
             System.out.println(divider);
         }
 
@@ -103,6 +110,7 @@ public class Chiikawa {
             throw new IndexOutOfBoundException();
         }
         arr.get(index).markAsDone();
+        storage.save(arr);
         System.out.println("I've marked this task as done ~nya! : ");
         System.out.println(arr.get(index));
     }
@@ -112,12 +120,14 @@ public class Chiikawa {
             throw new IndexOutOfBoundException();
         }
         arr.get(index).markAsUndone();
+        storage.save(arr);
         System.out.println("I've marked this task as not done yet ~nya! : ");
         System.out.println(arr.get(index));
     }
 
     public void addTodo(String description) {
         arr.add(new Todo(description));
+        storage.save(arr);
         System.out.println("I've added in this task ~nya! : ");
         System.out.println(arr.get(arr.size() - 1));
         System.out.println("Now you have " + arr.size() + " tasks in the list.");
@@ -129,6 +139,7 @@ public class Chiikawa {
             throw new NoDeadlineException();
         }
         arr.add(new Deadline(parts[0], parts[1]));
+        storage.save(arr);
         System.out.println("I've added in this task ~nya! : ");
         System.out.println(arr.get(arr.size() - 1));
         System.out.println("Now you have " + arr.size() + " tasks in the list.");
@@ -140,6 +151,7 @@ public class Chiikawa {
             throw new NoEventException();
         }
         arr.add(new Event(parts[0], parts[1], parts[2]));
+        storage.save(arr);
         System.out.println("I've added in this task ~nya! : ");
         System.out.println(arr.get(arr.size() - 1));
         System.out.println("Now you have " + arr.size() + " tasks in the list.");
@@ -151,6 +163,7 @@ public class Chiikawa {
         }
         Task task = arr.get(index);
         arr.remove(index);
+        storage.save(arr);
         System.out.println("I've removed this task ~nya! : ");
         System.out.println(task.toString());
         System.out.println("Now you have " + arr.size() + " tasks in the list.");

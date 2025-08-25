@@ -11,12 +11,20 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
+    public String getIsDone() {
+        return (isDone ? "1" : "0");
+    }
+
     public void markAsDone() {
         this.isDone = true;
     }
 
     public void markAsUndone() {
         this.isDone = false;
+    }
+
+    public String saveFormat() {
+        return "T | " + getIsDone() + " | " + description;
     }
 
     @Override

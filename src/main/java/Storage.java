@@ -1,28 +1,28 @@
-import java.io.File;
 import java.io.FileWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class Storage {
-    private final String filePath;
+    private final Path filePath;
 
-    public Storage(String filePath) {
+    public Storage(Path filePath) {
         this.filePath = filePath;
     }
 
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
-        File file = new File(filePath);
 
         try {
-            if (!file.exists()) {
-                file.getParentFile().mkdirs();
-                file.createNewFile();
+            Files.createDirectories(filePath.getParent());
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
                 return tasks;
             }
 
-            Scanner sc = new Scanner(file);
+            Scanner sc = new Scanner(filePath.toFile());
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 Task task = parseTask(line);
@@ -37,8 +37,7 @@ public class Storage {
     }
 
     public void save(ArrayList<Task> tasks) {
-        try {
-            FileWriter fw = new FileWriter(filePath);
+        try (FileWriter fw = new FileWriter(filePath.toFile())){
             for (Task task : tasks) {
                 fw.write(task.saveFormat() + System.lineSeparator());
             }

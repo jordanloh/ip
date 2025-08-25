@@ -13,82 +13,67 @@ public class Chiikawa {
     }
 
     public void run() {
-        Path path = java.nio.file.Paths.get( "data", "Chiikawa.txt");
-        Chiikawa chiikawa = new Chiikawa(path);
-
         ui.showWelcome();
 
         while (true) {
             String input = ui.readCommand();
 
-            String[] parts = input.split(" ", 2);
-            Command command;
-            ui.showDivider();
-
             try {
-                try {
-                    command = Command.valueOf(parts[0].toLowerCase());
-                } catch (IllegalArgumentException e) {
-                    ui.showMessage("Oh no! I don't recognise that command :(!");
-                    ui.showDivider();
-                    continue;
-                }
-                if (command == Command.bye) {
-                    ui.showMessage("Byebye!! See you again soon nya~!");
-                    ui.showDivider();
-                    break;
-                }
+                Command command = Parser.parseCommand(input);
+                String args = Parser.getCommandArgs(input);
+
                 switch (command) {
-                case list:
-                    chiikawa.listTasks();
-                    break;
-                case mark:
-                    if (parts.length < 2) {
+                case bye -> {
+                    ui.showGoodbye();
+                    ui.close();
+                    return;
+                }
+                case list -> listTasks();
+                case mark -> {
+                    if (args.isBlank()) {
                         throw new NoIndexException();
                     }
-                    chiikawa.markTask(Integer.parseInt(parts[1]) - 1);
-                    break;
-                case unmark:
-                    if (parts.length < 2) {
+                    markTask(Integer.parseInt(args) - 1);
+                }
+                case unmark -> {
+                    if (args.isBlank()) {
                         throw new NoIndexException();
                     }
-                    chiikawa.unmarkTask(Integer.parseInt(parts[1]) - 1);
-                    break;
-                case delete:
-                    if (parts.length < 2) {
+                    unmarkTask(Integer.parseInt(args) - 1);
+                }
+                case delete -> {
+                    if (args.isBlank()) {
                         throw new NoIndexException();
                     }
-                    chiikawa.deleteTask(Integer.parseInt(parts[1]) - 1);
-                    break;
-                case todo:
-                    if (parts.length < 2 || parts[1].isBlank()) {
+                    deleteTask(Integer.parseInt(args) - 1);
+                }
+                case todo -> {
+                    if (args.isBlank()) {
                         throw new EmptyDescriptionException();
                     }
-                    chiikawa.addTodo(parts[1].trim());
-                    break;
-                case deadline:
-                    if (parts.length < 2 || parts[1].isBlank()) {
+                    addTodo(args);
+                }
+                case deadline -> {
+                    if (args.isBlank()) {
                         throw new EmptyDescriptionException();
                     }
-                    chiikawa.addDeadline(parts[1].trim());
-                    break;
-                case event:
-                    if (parts.length < 2 || parts[1].isBlank()) {
+                    addDeadline(args);
+                }
+                case event -> {
+                    if (args.isBlank()) {
                         throw new EmptyDescriptionException();
                     }
-                    chiikawa.addEvent(parts[1].trim());
-                    break;
-                default:
-                    throw new ChiikawaException("Oh no! I don't recognise that command :(!");
+                    addEvent(args);
+                }
+                default -> throw new ChiikawaException("Oh no! I don't recognise that command :(!");
                 }
             } catch (ChiikawaException e) {
                 ui.showMessage(e.getMessage());
             }
             ui.showDivider();
         }
-
-        ui.close();
     }
+
     public static void main(String[] args) {
         Path path = java.nio.file.Paths.get( "data", "Chiikawa.txt");
         Chiikawa chiikawa = new Chiikawa(path);

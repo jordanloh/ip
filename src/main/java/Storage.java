@@ -12,7 +12,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    private Ui ui = new Ui();
+    private final Ui ui = new Ui();
 
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -27,7 +27,7 @@ public class Storage {
             Scanner sc = new Scanner(filePath.toFile());
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                Task task = parseTask(line);
+                Task task = Parser.parseTask(line);
                 if (task != null) {
                     tasks.add(task);
                 }
@@ -48,38 +48,4 @@ public class Storage {
         }
     }
 
-    private Task parseTask(String line) {
-        try {
-            String[] parts = line.split(" \\| ");
-            String type = parts[0];
-            boolean isDone = parts[1].equals("1");
-            String description = parts[2];
-
-            switch (type) {
-            case "T":
-                Task t = new Todo(description);
-                if (isDone) {
-                    t.markAsDone();
-                }
-                return t;
-            case "D":
-                Task d = new Deadline(description, Parser.parseDateTime(parts[3]));
-                if (isDone) {
-                    d.markAsDone();
-                }
-                return d;
-            case "E":
-                Task e = new Event(description, Parser.parseDateTime(parts[3]), Parser.parseDateTime(parts[4]));
-                if (isDone) {
-                    e.markAsDone();
-                }
-                return e;
-            default:
-                return null;
-            }
-        } catch (Exception e) {
-            ui.showMessage("Something went wrong! >_<");
-            return null;
-        }
-    }
 }

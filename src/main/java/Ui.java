@@ -45,13 +45,11 @@ public class Ui {
     public void showTaskMarked(Task task) {
         System.out.println("I've marked this task as done ~nya! : ");
         System.out.println(task.toString());
-        showDivider();
     }
 
     public void showTaskUnmarked(Task task) {
         System.out.println("I've marked this task as not done yet ~nya! : ");
         System.out.println(task.toString());
-        showDivider();
     }
 
     public void showListTasks(ArrayList<Task> arr) {

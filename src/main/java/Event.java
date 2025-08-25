@@ -14,7 +14,9 @@ public class Event extends Task {
 
     @Override
     public String saveFormat() {
-        return "E | " + getIsDone() + " | " + description + " | " + from + " | " + to;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return "E | " + getIsDone() + " | " + description + " | " + from.format(formatter) +
+                " | " + to.format(formatter);
     }
 
     @Override

@@ -12,7 +12,8 @@ public class Deadline extends Task {
 
     @Override
     public String saveFormat() {
-        return "D | " + getIsDone() + " | " + description + " | " + by;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return "D | " + getIsDone() + " | " + description + " | " + by.format(formatter);
     }
 
     @Override

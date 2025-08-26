@@ -1,3 +1,5 @@
+package chiikawa.exception;
+
 public class NoDeadlineException extends ChiikawaException {
 
     public NoDeadlineException() {

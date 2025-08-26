@@ -1,3 +1,5 @@
+package chiikawa;
+
 public enum Command {
     list,
     mark,

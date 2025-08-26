@@ -1,6 +1,8 @@
+package chiikawa.exception;
+
 public class ListEmptyException extends ChiikawaException {
 
-    ListEmptyException() {
+    public ListEmptyException() {
         super("Oh no! You have no tasks to list now!");
     }
 }

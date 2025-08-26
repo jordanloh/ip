@@ -1,4 +1,7 @@
-import java.util.ArrayList;
+package chiikawa;
+
+import chiikawa.task.Task;
+
 import java.util.Scanner;
 
 public class Ui {

@@ -1,3 +1,5 @@
+package chiikawa.exception;
+
 public class IndexOutOfBoundException extends ChiikawaException {
 
     public IndexOutOfBoundException() {

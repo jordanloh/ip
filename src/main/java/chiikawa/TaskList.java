@@ -1,9 +1,8 @@
 package chiikawa;
 
-import chiikawa.task.Task;
-
 import java.util.ArrayList;
 
+import chiikawa.task.Task;
 /**
  * Contains the task list and the necessary operations to deal with the task list.
  */

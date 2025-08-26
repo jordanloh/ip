@@ -1,13 +1,13 @@
 package chiikawa;
 
-import chiikawa.task.Task;
-
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.IOException;
-import java.nio.file.Path;
+
+import chiikawa.task.Task;
 
 /**
  * Deals with loading tasks from the file and saving tasks in the file.
@@ -61,7 +61,7 @@ public class Storage {
      * @param tasks An ArrayList containing the updated tasks to be saved to the file.
      */
     public void save(ArrayList<Task> tasks) {
-        try (FileWriter fw = new FileWriter(filePath.toFile())){
+        try (FileWriter fw = new FileWriter(filePath.toFile())) {
             for (Task task : tasks) {
                 fw.write(task.saveFormat() + System.lineSeparator());
             }

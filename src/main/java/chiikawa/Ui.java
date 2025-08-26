@@ -1,9 +1,8 @@
 package chiikawa;
 
-import chiikawa.task.Task;
-
 import java.util.Scanner;
 
+import chiikawa.task.Task;
 /**
  * Deals with input and output operations from the user.
  */

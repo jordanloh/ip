@@ -1,8 +1,8 @@
 package chiikawa;
 
-import chiikawa.task.Task;
-
 import java.util.Scanner;
+
+import chiikawa.task.Task;
 
 public class Ui {
     private static final String name = "Chiikawa";

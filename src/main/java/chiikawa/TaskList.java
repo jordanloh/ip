@@ -1,8 +1,8 @@
 package chiikawa;
 
-import chiikawa.task.Task;
-
 import java.util.ArrayList;
+
+import chiikawa.task.Task;
 
 public class TaskList {
 

@@ -1,19 +1,19 @@
 package chiikawa;
 
+import java.nio.file.Path;
+import java.time.format.DateTimeParseException;
+
 import chiikawa.exception.ChiikawaException;
 import chiikawa.exception.EmptyDescriptionException;
 import chiikawa.exception.IndexOutOfBoundException;
 import chiikawa.exception.ListEmptyException;
 import chiikawa.exception.NoDeadlineException;
-import chiikawa.exception.NoIndexException;
 import chiikawa.exception.NoEventException;
+import chiikawa.exception.NoIndexException;
 import chiikawa.task.Deadline;
 import chiikawa.task.Event;
 import chiikawa.task.Task;
 import chiikawa.task.Todo;
-
-import java.time.format.DateTimeParseException;
-import java.nio.file.Path;
 
 public class Chiikawa {
     private Ui ui = new Ui();
@@ -88,7 +88,7 @@ public class Chiikawa {
     }
 
     public static void main(String[] args) {
-        Path path = java.nio.file.Paths.get( "data", "chiikawa.Chiikawa.txt");
+        Path path = java.nio.file.Paths.get("data", "chiikawa.Chiikawa.txt");
         Chiikawa chiikawa = new Chiikawa(path);
         chiikawa.run();
     }

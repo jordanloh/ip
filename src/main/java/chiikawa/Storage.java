@@ -1,13 +1,13 @@
 package chiikawa;
 
-import chiikawa.task.Task;
-
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.IOException;
-import java.nio.file.Path;
+
+import chiikawa.task.Task;
 
 public class Storage {
     private final Path filePath;
@@ -43,7 +43,7 @@ public class Storage {
     }
 
     public void save(ArrayList<Task> tasks) {
-        try (FileWriter fw = new FileWriter(filePath.toFile())){
+        try (FileWriter fw = new FileWriter(filePath.toFile())) {
             for (Task task : tasks) {
                 fw.write(task.saveFormat() + System.lineSeparator());
             }

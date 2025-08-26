@@ -10,8 +10,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Deals with formatting inputs properly.
+ */
 public class Parser {
 
+    /**
+     * Parses the input into a valid command.
+     *
+     * @param input Command that needs to be parsed into an appropriate format.
+     * @return Command contained in the input.
+     * @throws ChiikawaException If the input is empty or is an invalid command.
+     */
     public static Command parseCommand(String input) throws ChiikawaException {
         if (input.isBlank()) {
             throw new ChiikawaException("Input cannot be empty!");
@@ -25,16 +35,35 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns the arguments provided with the command by the user.
+     *
+     * @param input Input that was passed in by the user containing additional arguments.
+     * @return The additional arguments provided by the user.
+     */
     public static String getCommandArgs(String input) {
         String[] parts = input.split(" ", 2);
         return (parts.length > 1) ? parts[1].trim() : "";
     }
 
+    /**
+     * Returns a LocalDateTime object formatted by yyyy-MM-dd HHmm.
+     *
+     * @param input String containing the datetime to be formatted.
+     * @return LocalDateTime object formatted properly.
+     * @throws DateTimeParseException If there is an error parsing the input.
+     */
     public static LocalDateTime parseDateTime(String input) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return LocalDateTime.parse(input, formatter);
     }
 
+    /**
+     * Returns the task object after parsing the input by the user.
+     *
+     * @param line String containing the description / deadline / event datetime of the task.
+     * @return The newly created Task object.
+     */
     public static Task parseTask(String line) {
         Ui ui = new Ui();
         try {

@@ -1,3 +1,7 @@
+package chiikawa;
+
+import chiikawa.task.Task;
+
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;

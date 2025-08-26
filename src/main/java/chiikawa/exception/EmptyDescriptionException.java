@@ -1,3 +1,5 @@
+package chiikawa.exception;
+
 public class EmptyDescriptionException extends ChiikawaException {
 
     public EmptyDescriptionException() {

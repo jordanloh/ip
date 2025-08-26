@@ -1,3 +1,5 @@
+package chiikawa.exception;
+
 public class NoIndexException extends ChiikawaException {
 
     public NoIndexException() {

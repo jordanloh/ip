@@ -104,6 +104,18 @@ public class Ui {
         }
     }
 
+    public void showTask(Task task) {
+        System.out.println(task.toString());
+    }
+
+    public void showFindMatchingTaskMessage() {
+        System.out.println("Hey!! Here are some matching tasks in your list:");
+    }
+
+    public void showNoMatchFoundMessage() {
+        System.out.println("Aww... no matching tasks found.");
+    }
+
     /**
      * Reads the command inputted by the user.
      *

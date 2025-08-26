@@ -78,6 +78,7 @@ public class Chiikawa {
                     }
                     addEvent(args);
                 }
+                case find -> findTask(args);
                 default -> throw new ChiikawaException("Oh no! I don't recognise that command :(!");
                 }
             } catch (ChiikawaException e) {
@@ -162,5 +163,19 @@ public class Chiikawa {
         tasks.deleteTask(index);
         storage.save(tasks.getAllTasks());
         ui.showTaskRemoved(task, tasks.size());
+    }
+
+    public void findTask(String args) {
+        ui.showFindMatchingTaskMessage();
+        int count = 1;
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.getTask(i).getDescription().contains(args)) {
+                ui.showMessage(count + "." + tasks.getTask(i));
+                count++;
+            }
+        }
+        if (count == 1) {
+            ui.showNoMatchFoundMessage();
+        }
     }
 }

@@ -25,6 +25,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     public String saveFormat() {
         return "T | " + getIsDone() + " | " + description;
     }

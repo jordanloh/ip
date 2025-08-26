@@ -15,16 +15,27 @@ import chiikawa.task.Todo;
 import java.time.format.DateTimeParseException;
 import java.nio.file.Path;
 
+/**
+ * Represents the main Chiikawa chatbot.
+ */
 public class Chiikawa {
     private Ui ui = new Ui();
     private TaskList tasks;
     private Storage storage;
 
+    /**
+     * Initialises the Chiikawa object.
+     *
+     * @param filePath Directory to specify where to store the tasks.
+     */
     public Chiikawa(Path filePath) {
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
     }
 
+    /**
+     * Runs the chatbot.
+     */
     public void run() {
         ui.showWelcome();
 
@@ -87,12 +98,22 @@ public class Chiikawa {
         }
     }
 
+    /**
+     * Main driver to start the program.
+     *
+     * @param args Necessary CLI arguments.
+     */
     public static void main(String[] args) {
         Path path = java.nio.file.Paths.get( "data", "chiikawa.Chiikawa.txt");
         Chiikawa chiikawa = new Chiikawa(path);
         chiikawa.run();
     }
 
+    /**
+     * Lists the tasks currently in the TaskList.
+     *
+     * @throws ChiikawaException If the list is empty.
+     */
     public void listTasks() throws ChiikawaException {
         if (tasks.size() == 0) {
             throw new ListEmptyException();
@@ -100,6 +121,12 @@ public class Chiikawa {
         ui.showListTasks(tasks);
     }
 
+    /**
+     * Marks the task with the given index in the list as done.
+     *
+     * @param index Index of the task to be marked as done.
+     * @throws ChiikawaException If the index provided is out of bounds.
+     */
     public void markTask(int index) throws ChiikawaException {
         if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundException();
@@ -109,6 +136,12 @@ public class Chiikawa {
         ui.showTaskMarked(tasks.getTask(index));
     }
 
+    /**
+     * Unmarks the task with the given index in the list as done.
+     *
+     * @param index Index of the task to be unmarked as done.
+     * @throws ChiikawaException If the index provided is out of bounds.
+     */
     public void unmarkTask(int index) throws ChiikawaException {
         if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundException();
@@ -118,12 +151,23 @@ public class Chiikawa {
         ui.showTaskUnmarked(tasks.getTask(index));
     }
 
+    /**
+     * Adds a todo task to task list.
+     *
+     * @param description Description of the todo task.
+     */
     public void addTodo(String description) {
         tasks.addTask(new Todo(description));
         storage.save(tasks.getAllTasks());
         ui.showTaskAdded(tasks.getTask(tasks.size() - 1), tasks.size());
     }
 
+    /**
+     * Adds a deadline task to the task list.
+     *
+     * @param input String containing the description and deadline of the task.
+     * @throws ChiikawaException If the provided arguments are incorrect.
+     */
     public void addDeadline(String input) throws ChiikawaException {
         String[] parts = input.split(" /by ", 2);
         if (parts.length < 2 || parts[0].isBlank() || parts[1].isBlank()) {
@@ -139,6 +183,12 @@ public class Chiikawa {
         ui.showTaskAdded(tasks.getTask(tasks.size() - 1), tasks.size());
     }
 
+    /**
+     * Adds an event task to the task list.
+     *
+     * @param input String containing the description, start and end datetime of the task.
+     * @throws ChiikawaException If the provided arguments are incorrect.
+     */
     public void addEvent(String input) throws ChiikawaException {
         String[] parts = input.split(" /from | /to ", 3);
         if (parts.length < 3 || parts[0].isBlank() || parts[1].isBlank() || parts[2].isBlank()) {
@@ -154,6 +204,12 @@ public class Chiikawa {
         ui.showTaskAdded(tasks.getTask(tasks.size() - 1), tasks.size());
     }
 
+    /**
+     * Deletes the task with the given index from the task list.
+     *
+     * @param index Index of the task to be deleted from the task list.
+     * @throws ChiikawaException If the index provided is out of bounds.
+     */
     public void deleteTask(int index) throws ChiikawaException {
         if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundException();

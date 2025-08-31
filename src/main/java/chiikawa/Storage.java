@@ -14,6 +14,7 @@ import chiikawa.task.Task;
  */
 public class Storage {
     private final Path filePath;
+    private final Ui ui = new Ui();
 
     /**
      * Initialises the Storage object with the given filePath.
@@ -23,8 +24,6 @@ public class Storage {
     public Storage(Path filePath) {
         this.filePath = filePath;
     }
-
-    private final Ui ui = new Ui();
 
     /**
      * Loads the task list from the file in the computer.

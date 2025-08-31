@@ -221,6 +221,11 @@ public class Chiikawa {
         ui.showTaskRemoved(task, tasks.size());
     }
 
+    /**
+     * Finds all tasks with the given keywords from the task list.
+     *
+     * @param args String containing the keywords to find from task list.
+     */
     public void findTask(String args) {
         ui.showFindMatchingTaskMessage();
         int count = 1;

@@ -28,7 +28,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_Command_validCommand_success() {
+    public void parseCommand_validCommand_success() {
         try {
             Command result = Parser.parseCommand("todo Buy milk");
             assertEquals(Command.todo, result, "parseCommand should return Command.todo");

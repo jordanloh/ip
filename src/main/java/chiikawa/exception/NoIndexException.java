@@ -1,5 +1,9 @@
 package chiikawa.exception;
 
+/**
+ * Represents an exception thrown when no index is provided when using the delete,
+ * mark or unmark commands.
+ */
 public class NoIndexException extends ChiikawaException {
 
     public NoIndexException() {

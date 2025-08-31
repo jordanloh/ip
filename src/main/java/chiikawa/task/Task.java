@@ -1,9 +1,19 @@
 package chiikawa.task;
 
+/**
+ * Represents a Task object. A Task object consist
+ * of a description, and a boolean marking whether
+ * the task was done or not.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Constructor to initialise the Task.
+     *
+     * @param description String of the description of the task.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;

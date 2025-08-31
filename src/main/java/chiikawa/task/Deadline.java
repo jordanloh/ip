@@ -3,10 +3,20 @@ package chiikawa.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a Deadline task. Includes a LocalDateTime
+ * representing the deadline of the task.
+ */
 public class Deadline extends Task {
 
     protected LocalDateTime by;
 
+    /**
+     * Constructor to initialise a deadline task.
+     *
+     * @param description String of the description of the task.
+     * @param by The deadline of the task.
+     */
     public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;

@@ -44,7 +44,8 @@ public class Parser {
     public static String getCommandArgs(String input) {
         assert !input.isBlank() : "Command input should not be empty";
         String[] parts = input.split(" ", 2);
-        return (parts.length > 1) ? parts[1].trim() : "";
+        boolean isValidArgs = parts.length > 1;
+        return isValidArgs ? parts[1].trim() : "";
     }
 
     /**
@@ -79,19 +80,19 @@ public class Parser {
             case "T":
                 Task t = new Todo(description);
                 if (isDone) {
-                    t.markAsDone();
+                    t.setAsDone();
                 }
                 return t;
             case "D":
                 Task d = new Deadline(description, Parser.parseDateTime(parts[3]));
                 if (isDone) {
-                    d.markAsDone();
+                    d.setAsDone();
                 }
                 return d;
             case "E":
                 Task e = new Event(description, Parser.parseDateTime(parts[3]), Parser.parseDateTime(parts[4]));
                 if (isDone) {
-                    e.markAsDone();
+                    e.setAsDone();
                 }
                 return e;
             default:

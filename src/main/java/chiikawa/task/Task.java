@@ -5,7 +5,7 @@ package chiikawa.task;
  * of a description, and a boolean marking whether
  * the task was done or not.
  */
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -46,5 +46,15 @@ public class Task {
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
+    }
+
+    /**
+     * Update a single field. Throws UnsupportedOperationException if the field
+     * cannot be applied to this task type.
+     */
+    public abstract void updateField(String key, String value);
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

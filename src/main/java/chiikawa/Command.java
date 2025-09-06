@@ -12,5 +12,6 @@ public enum Command {
     event,
     delete,
     bye,
-    find;
+    find,
+    update;
 }

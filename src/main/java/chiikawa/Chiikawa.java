@@ -322,6 +322,7 @@ public class Chiikawa {
                 response.append(addEventAsString(args));
             }
             case find -> response.append(findTaskAsString(args));
+            case update -> response.append(updateTaskAsString(args));
             default -> throw new ChiikawaException("Oh no! I don't recognise that command :(!");
             }
         } catch (ChiikawaException e) {
@@ -393,7 +394,11 @@ public class Chiikawa {
         if (hasMissingParts || isFirstPartBlank || isSecondPartBlank) {
             throw new NoDeadlineException();
         }
-        tasks.addTask(new Deadline(parts[0], Parser.parseDateTime(parts[1])));
+        try {
+            tasks.addTask(new Deadline(parts[0], Parser.parseDateTime(parts[1])));
+        } catch (DateTimeParseException e) {
+            return "Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800";
+        }
         storage.save(tasks.getAllTasks());
         return "Got it. I've added this task:\n  "
                 + tasks.getTask(tasks.size() - 1)
@@ -412,9 +417,13 @@ public class Chiikawa {
         if (hasMissingParts || isFirstPartBlank || isSecondPartBlank || isThirdPartBlank) {
             throw new NoEventException();
         }
-        tasks.addTask(new Event(parts[0],
-                Parser.parseDateTime(parts[1]),
-                Parser.parseDateTime(parts[2])));
+        try {
+            tasks.addTask(new Event(parts[0],
+                    Parser.parseDateTime(parts[1]),
+                    Parser.parseDateTime(parts[2])));
+        } catch (DateTimeParseException e) {
+            return "Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800";
+        }
         storage.save(tasks.getAllTasks());
         return "Got it. I've added this task:\n  "
                 + tasks.getTask(tasks.size() - 1)
@@ -451,6 +460,43 @@ public class Chiikawa {
             return "No matching tasks found!";
         }
         return sb.toString();
+    }
+
+    private String updateTaskAsString(String args) throws ChiikawaException {
+        String[] parts = args.split(" ", 3);
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]) - 1;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid task index: " + parts[0]);
+        }
+
+        if (parts.length < 3) {
+            throw new IllegalArgumentException("Invalid format. Usage: update <index> <field> <value>");
+        }
+
+        boolean isNegativeIndex = index < 0;
+        boolean isLargerThanSizeIndex = index >= tasks.size();
+
+        boolean outOfBoundsIndex = isNegativeIndex || isLargerThanSizeIndex;
+
+        if (outOfBoundsIndex) {
+            throw new IndexOutOfBoundException();
+        }
+
+        String key = parts[1];
+        String value = parts[2];
+
+        Task task = tasks.getTask(index);
+
+        try {
+            task.updateField(key, value);
+        } catch (UnsupportedOperationException e) {
+            return "Error: " + e.getMessage();
+        } catch (DateTimeParseException e) {
+            return "Invalid date/time format! Please use yyyy-MM-dd HHmm, e.g. 2019-12-25 1800";
+        }
+        return "Got it! I’ve updated the task:\n  " + task;
     }
 
 

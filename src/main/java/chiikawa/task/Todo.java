@@ -13,4 +13,13 @@ public class Todo extends Task {
     public String toString() {
         return "[T]" + super.toString();
     }
+
+    @Override
+    public void updateField(String key, String value) {
+        if ("/description".equals(key)) {
+            setDescription(value);
+        } else {
+            throw new UnsupportedOperationException("Todo cannot have field " + key);
+        }
+    }
 }

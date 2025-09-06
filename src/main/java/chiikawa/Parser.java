@@ -26,8 +26,8 @@ public class Parser {
         if (input.isBlank()) {
             throw new ChiikawaException("Input cannot be empty!");
         }
-
         String[] parts = input.split(" ", 2);
+        assert !parts[0].isEmpty() : "Input must have a non-empty command word";
         try {
             return Command.valueOf(parts[0].toLowerCase());
         } catch (IllegalArgumentException e) {
@@ -42,6 +42,7 @@ public class Parser {
      * @return The additional arguments provided by the user.
      */
     public static String getCommandArgs(String input) {
+        assert !input.isBlank() : "Command input should not be empty";
         String[] parts = input.split(" ", 2);
         boolean isValidArgs = parts.length > 1;
         return isValidArgs ? parts[1].trim() : "";
@@ -70,7 +71,9 @@ public class Parser {
         try {
             String[] parts = line.split(" \\| ");
             String type = parts[0];
+            assert parts[1].equals("1") || parts[1].equals("0") : "isDone boolean is incorrect";
             boolean isDone = parts[1].equals("1");
+            assert !parts[2].isBlank() : "Description should not be blank";
             String description = parts[2];
 
             switch (type) {

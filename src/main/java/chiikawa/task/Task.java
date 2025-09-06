@@ -27,11 +27,11 @@ public class Task {
         return (isDone ? "1" : "0");
     }
 
-    public void markAsDone() {
+    public void setAsDone() {
         this.isDone = true;
     }
 
-    public void markAsUndone() {
+    public void setAsUndone() {
         this.isDone = false;
     }
 

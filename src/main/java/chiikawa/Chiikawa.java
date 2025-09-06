@@ -144,7 +144,7 @@ public class Chiikawa {
         if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundException();
         }
-        tasks.getTask(index).markAsDone();
+        tasks.getTask(index).setAsDone();
         storage.save(tasks.getAllTasks());
         ui.showTaskMarked(tasks.getTask(index));
     }
@@ -159,7 +159,7 @@ public class Chiikawa {
         if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundException();
         }
-        tasks.getTask(index).markAsUndone();
+        tasks.getTask(index).setAsUndone();
         storage.save(tasks.getAllTasks());
         ui.showTaskUnmarked(tasks.getTask(index));
     }
@@ -182,8 +182,14 @@ public class Chiikawa {
      * @throws ChiikawaException If the provided arguments are incorrect.
      */
     public void addDeadline(String input) throws ChiikawaException {
-        String[] parts = input.split(" /by ", 2);
-        if (parts.length < 2 || parts[0].isBlank() || parts[1].isBlank()) {
+        int NUM_DEADLINE_PARTS = 2;
+        String[] parts = input.split(" /by ", NUM_DEADLINE_PARTS);
+
+        boolean hasMissingParts = parts.length < NUM_DEADLINE_PARTS;
+        boolean isFirstPartBlank = parts[0].isBlank();
+        boolean isSecondPartBlank = parts[1].isBlank();
+
+        if (hasMissingParts || isFirstPartBlank || isSecondPartBlank) {
             throw new NoDeadlineException();
         }
         try {
@@ -203,8 +209,15 @@ public class Chiikawa {
      * @throws ChiikawaException If the provided arguments are incorrect.
      */
     public void addEvent(String input) throws ChiikawaException {
-        String[] parts = input.split(" /from | /to ", 3);
-        if (parts.length < 3 || parts[0].isBlank() || parts[1].isBlank() || parts[2].isBlank()) {
+        int NUM_EVENT_PARTS = 3;
+        String[] parts = input.split(" /from | /to ", NUM_EVENT_PARTS);
+
+        boolean hasMissingParts = parts.length < NUM_EVENT_PARTS;
+        boolean isFirstPartBlank = parts[0].isBlank();
+        boolean isSecondPartBlank = parts[1].isBlank();
+        boolean isThirdPartBlank = parts[2].isBlank();
+
+        if (hasMissingParts || isFirstPartBlank || isSecondPartBlank || isThirdPartBlank) {
             throw new NoEventException();
         }
         try {
@@ -224,7 +237,12 @@ public class Chiikawa {
      * @throws ChiikawaException If the index provided is out of bounds.
      */
     public void deleteTask(int index) throws ChiikawaException {
-        if (index < 0 || index >= tasks.size()) {
+        boolean isNegativeIndex = index < 0;
+        boolean isLargerThanSizeIndex = index >= tasks.size();
+
+        boolean outOfBoundsIndex = isNegativeIndex || isLargerThanSizeIndex;
+
+        if (outOfBoundsIndex) {
             throw new IndexOutOfBoundException();
         }
         Task task = tasks.getTask(index);
@@ -329,19 +347,29 @@ public class Chiikawa {
     }
 
     private String markTaskAsString(int index) throws ChiikawaException {
-        if (index < 0 || index >= tasks.size()) {
+        boolean isNegativeIndex = index < 0;
+        boolean isLargerThanSizeIndex = index >= tasks.size();
+
+        boolean outOfBoundsIndex = isNegativeIndex || isLargerThanSizeIndex;
+
+        if (outOfBoundsIndex) {
             throw new IndexOutOfBoundException();
         }
-        tasks.getTask(index).markAsDone();
+        tasks.getTask(index).setAsDone();
         storage.save(tasks.getAllTasks());
         return "Nice! I've marked this task as done:\n  " + tasks.getTask(index);
     }
 
     private String unmarkTaskAsString(int index) throws ChiikawaException {
-        if (index < 0 || index >= tasks.size()) {
+        boolean isNegativeIndex = index < 0;
+        boolean isLargerThanSizeIndex = index >= tasks.size();
+
+        boolean outOfBoundsIndex = isNegativeIndex || isLargerThanSizeIndex;
+
+        if (outOfBoundsIndex) {
             throw new IndexOutOfBoundException();
         }
-        tasks.getTask(index).markAsUndone();
+        tasks.getTask(index).setAsUndone();
         storage.save(tasks.getAllTasks());
         return "OK, I've marked this task as not done yet:\n  " + tasks.getTask(index);
     }
@@ -355,8 +383,14 @@ public class Chiikawa {
     }
 
     private String addDeadlineAsString(String input) throws ChiikawaException {
-        String[] parts = input.split(" /by ", 2);
-        if (parts.length < 2 || parts[0].isBlank() || parts[1].isBlank()) {
+        int NUM_DEADLINE_PARTS = 2;
+        String[] parts = input.split(" /by ", NUM_DEADLINE_PARTS);
+
+        boolean hasMissingParts = parts.length < NUM_DEADLINE_PARTS;
+        boolean isFirstPartBlank = parts[0].isBlank();
+        boolean isSecondPartBlank = parts[1].isBlank();
+
+        if (hasMissingParts || isFirstPartBlank || isSecondPartBlank) {
             throw new NoDeadlineException();
         }
         tasks.addTask(new Deadline(parts[0], Parser.parseDateTime(parts[1])));
@@ -367,8 +401,15 @@ public class Chiikawa {
     }
 
     private String addEventAsString(String input) throws ChiikawaException {
-        String[] parts = input.split(" /from | /to ", 3);
-        if (parts.length < 3 || parts[0].isBlank() || parts[1].isBlank() || parts[2].isBlank()) {
+        int NUM_EVENT_PARTS = 3;
+        String[] parts = input.split(" /from | /to ", NUM_EVENT_PARTS);
+
+        boolean hasMissingParts = parts.length < NUM_EVENT_PARTS;
+        boolean isFirstPartBlank = parts[0].isBlank();
+        boolean isSecondPartBlank = parts[1].isBlank();
+        boolean isThirdPartBlank = parts[2].isBlank();
+
+        if (hasMissingParts || isFirstPartBlank || isSecondPartBlank || isThirdPartBlank) {
             throw new NoEventException();
         }
         tasks.addTask(new Event(parts[0],
@@ -381,7 +422,12 @@ public class Chiikawa {
     }
 
     private String deleteTaskAsString(int index) throws ChiikawaException {
-        if (index < 0 || index >= tasks.size()) {
+        boolean isNegativeIndex = index < 0;
+        boolean isLargerThanSizeIndex = index >= tasks.size();
+
+        boolean outOfBoundsIndex = isNegativeIndex || isLargerThanSizeIndex;
+
+        if (outOfBoundsIndex) {
             throw new IndexOutOfBoundException();
         }
         Task task = tasks.getTask(index);

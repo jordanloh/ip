@@ -78,6 +78,9 @@ public class Chiikawa {
 
     /**
      * Returns a response string for GUI or CLI.
+     *
+     * @param input The input the user passes in.
+     * @return The output string based on the command and arguments.
      */
     public String getResponse(String input) {
         StringBuilder response = new StringBuilder();
@@ -146,6 +149,11 @@ public class Chiikawa {
         return response.toString();
     }
 
+    /**
+     * Gets the welcome message for the chatbot.
+     *
+     * @return The welcome message upon loading the chatbot.
+     */
     public String getWelcomeMessage() {
         return "Hello! I'm Chiikawa :3\nWhat can I do for you today?";
     }

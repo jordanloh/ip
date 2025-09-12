@@ -22,6 +22,7 @@ Here are your tasks:
 ## Marking tasks as completed
 
 Marks a task as completed in your list.
+
 Format: `mark <index>`
 
 Expected output:
@@ -33,6 +34,7 @@ Nice! I've mark this task as done:
 ## Unmarking tasks
 
 Unmarks a task as not completed from your list.
+
 Format: `unmark <index>`
 
 Expected output:
@@ -44,6 +46,7 @@ OK, I've marked this task as not done yet:
 ## Adding todos
 
 Adds a todo task to your list.
+
 Format: `todo <description>`
 
 Example: `todo Buy groceries`
@@ -59,6 +62,7 @@ Now you have <x> tasks in the list.
 ## Adding deadlines
 
 Adds a deadline task to your list.
+
 Format: `deadline <description> /by <yyyy-MM-dd HHmm>`
 
 Example: `deadline Assignment 1 /by 2025-09-13 2359`
@@ -74,6 +78,7 @@ Now you have <x> tasks in the list.
 ## Adding events
 
 Adds an event task to your list.
+
 Format: `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
 
 Example: `event Tutorial /from 2025-09-18 1600 /to 2025-09-18 1800`
@@ -88,6 +93,7 @@ Now you have <x> tasks in the list.
 ## Deleting tasks
 
 Deletes a task from your list permanently.
+
 Format: `delete <index>`
 
 Expected output:
@@ -100,6 +106,7 @@ Now you have <x> tasks in the list.
 ## Finding tasks
 
 Finds a task from your list from a given keyword.
+
 Format: `find <keyword>`
 
 Example: `find Assignment`
@@ -113,6 +120,7 @@ Here are the matching tasks in your list:
 ## Updating tasks
 
 Updates a task's information based on the type of task and field.
+
 Format: `update <index> <field> <value>`
 
 Examples:
@@ -137,5 +145,6 @@ Expected output:
 ## Exiting the program
 
 Exits the program
+
 Format: `bye`
    

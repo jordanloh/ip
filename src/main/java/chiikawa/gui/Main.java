@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * Main class for setting up Application.
+ */
 public class Main extends Application {
 
     private Chiikawa chiikawa = new Chiikawa();

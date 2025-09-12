@@ -182,10 +182,10 @@ public class Chiikawa {
      * @throws ChiikawaException If the provided arguments are incorrect.
      */
     public void addDeadline(String input) throws ChiikawaException {
-        int NUM_DEADLINE_PARTS = 2;
-        String[] parts = input.split(" /by ", NUM_DEADLINE_PARTS);
+        int numDeadlineParts = 2;
+        String[] parts = input.split(" /by ", numDeadlineParts);
 
-        boolean hasMissingParts = parts.length < NUM_DEADLINE_PARTS;
+        boolean hasMissingParts = parts.length < numDeadlineParts;
         boolean isFirstPartBlank = parts[0].isBlank();
         boolean isSecondPartBlank = parts[1].isBlank();
 
@@ -209,10 +209,10 @@ public class Chiikawa {
      * @throws ChiikawaException If the provided arguments are incorrect.
      */
     public void addEvent(String input) throws ChiikawaException {
-        int NUM_EVENT_PARTS = 3;
-        String[] parts = input.split(" /from | /to ", NUM_EVENT_PARTS);
+        int numEventParts = 3;
+        String[] parts = input.split(" /from | /to ", numEventParts);
 
-        boolean hasMissingParts = parts.length < NUM_EVENT_PARTS;
+        boolean hasMissingParts = parts.length < numEventParts;
         boolean isFirstPartBlank = parts[0].isBlank();
         boolean isSecondPartBlank = parts[1].isBlank();
         boolean isThirdPartBlank = parts[2].isBlank();
@@ -384,10 +384,10 @@ public class Chiikawa {
     }
 
     private String addDeadlineAsString(String input) throws ChiikawaException {
-        int NUM_DEADLINE_PARTS = 2;
-        String[] parts = input.split(" /by ", NUM_DEADLINE_PARTS);
+        int numDeadlineParts = 2;
+        String[] parts = input.split(" /by ", numDeadlineParts);
 
-        boolean hasMissingParts = parts.length < NUM_DEADLINE_PARTS;
+        boolean hasMissingParts = parts.length < numDeadlineParts;
         boolean isFirstPartBlank = parts[0].isBlank();
         boolean isSecondPartBlank = parts[1].isBlank();
 
@@ -406,10 +406,10 @@ public class Chiikawa {
     }
 
     private String addEventAsString(String input) throws ChiikawaException {
-        int NUM_EVENT_PARTS = 3;
-        String[] parts = input.split(" /from | /to ", NUM_EVENT_PARTS);
+        int numEventParts = 3;
+        String[] parts = input.split(" /from | /to ", numEventParts);
 
-        boolean hasMissingParts = parts.length < NUM_EVENT_PARTS;
+        boolean hasMissingParts = parts.length < numEventParts;
         boolean isFirstPartBlank = parts[0].isBlank();
         boolean isSecondPartBlank = parts[1].isBlank();
         boolean isThirdPartBlank = parts[2].isBlank();

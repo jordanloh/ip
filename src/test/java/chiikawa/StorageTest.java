@@ -28,13 +28,17 @@ public class StorageTest {
             this.isDone = done;
         }
 
+        public boolean isDone() {
+            return isDone;
+        }
+
         public String getDescription() {
             return description;
         }
 
         @Override
         public String saveFormat() {
-            return "T | " + getIsDone() + " | " + description;
+            return "T | " + (isDone() ? 1 : 0) + " | " + description;
         }
     }
 
@@ -63,7 +67,7 @@ public class StorageTest {
 
         @Override
         public String saveFormat() {
-            return "D | " + getIsDone() + " | " + getDescription() + " | " + by;
+            return "D | " + (isDone() ? 1 : 0) + " | " + getDescription() + " | " + by;
         }
 
         @Override
@@ -90,6 +94,7 @@ public class StorageTest {
 
         try {
             String fileContent = readString(filePath);
+            System.out.println(fileContent);
             assertTrue(fileContent.contains("T | 1 | Buy milk"));
             assertTrue(fileContent.contains("D | 0 | Submit report | 2025-08-30 2359"));
         } catch (IOException e) {

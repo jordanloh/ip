@@ -19,8 +19,8 @@ public class StorageTest {
     Path tempDir;
 
     abstract static class TaskStub extends Task {
-        public String description;
-        public final boolean isDone;
+        private String description;
+        private final boolean isDone;
 
         public TaskStub(String description, boolean done) {
             super(description);
@@ -28,9 +28,13 @@ public class StorageTest {
             this.isDone = done;
         }
 
+        public String getDescription() {
+            return description;
+        }
+
         @Override
         public String saveFormat() {
-            return "T | " + (isDone ? "1" : "0") + " | " + description;
+            return "T | " + getIsDone() + " | " + description;
         }
     }
 
@@ -59,7 +63,7 @@ public class StorageTest {
 
         @Override
         public String saveFormat() {
-            return "D | " + (isDone ? "1" : "0") + " | " + this.description + " | " + by;
+            return "D | " + getIsDone() + " | " + getDescription() + " | " + by;
         }
 
         @Override

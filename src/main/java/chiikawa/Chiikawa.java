@@ -52,7 +52,7 @@ public class Chiikawa {
      * @param args Necessary CLI arguments.
      */
     public static void main(String[] args) {
-        Path path = java.nio.file.Paths.get("data", "chiikawa.Chiikawa.txt");
+        Path path = java.nio.file.Paths.get("data", "chiikawa.txt");
         Chiikawa chiikawa = new Chiikawa(path);
         chiikawa.run();
     }

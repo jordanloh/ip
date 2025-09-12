@@ -18,8 +18,8 @@ public class StorageTest {
     @TempDir
     Path tempDir;
 
-    static class TaskStub extends Task {
-        public final String description;
+    abstract static class TaskStub extends Task {
+        public String description;
         public final boolean isDone;
 
         public TaskStub(String description, boolean done) {
@@ -38,10 +38,19 @@ public class StorageTest {
         public TodoStub(String description, boolean done) {
             super(description, done);
         }
+
+        @Override
+        public void updateField(String key, String value) {
+            if ("/description".equals(key)) {
+                setDescription(value);
+            } else {
+                throw new UnsupportedOperationException("Todo cannot have field " + key);
+            }
+        }
     }
 
     static class DeadlineStub extends TaskStub {
-        private final String by;
+        private String by;
 
         public DeadlineStub(String description, boolean done, String by) {
             super(description, done);
@@ -52,6 +61,16 @@ public class StorageTest {
         public String saveFormat() {
             return "D | " + (isDone ? "1" : "0") + " | " + this.description + " | " + by;
         }
+
+        @Override
+        public void updateField(String key, String value) {
+            switch (key) {
+            case "/description" -> setDescription(value);
+            case "/by" -> this.by = value;
+            default -> throw new UnsupportedOperationException("Deadline cannot have field " + key);
+            }
+        }
+
     }
 
     @Test

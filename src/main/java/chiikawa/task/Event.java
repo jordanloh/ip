@@ -15,7 +15,7 @@ public class Event extends Task {
     protected LocalDateTime to;
 
     /**
-     * Constructor to initialise an Event task,
+     * Initialises an Event task.
      *
      * @param description String of the description of the task.
      * @param from The start date and time of the task.

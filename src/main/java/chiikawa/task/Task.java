@@ -10,7 +10,7 @@ public abstract class Task {
     protected boolean isDone;
 
     /**
-     * Constructor to initialise the Task.
+     * Initialises the task object.
      *
      * @param description String of the description of the task.
      */
@@ -49,7 +49,7 @@ public abstract class Task {
     }
 
     /**
-     * Update a single field. Throws UnsupportedOperationException if the field
+     * Updates a single field. Throws UnsupportedOperationException if the field
      * cannot be applied to this task type.
      */
     public abstract void updateField(String key, String value);

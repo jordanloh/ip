@@ -27,7 +27,7 @@ public class Chiikawa {
     private final Storage storage;
 
     /**
-     * Constructor for the Chiikawa object.
+     * Initialises a Chiikawa object.
      *
      * @param filePath The path to where the data is stored.
      */
@@ -47,7 +47,7 @@ public class Chiikawa {
     }
 
     /**
-     * Main driver to start the program.
+     * Starts the program.
      *
      * @param args Necessary CLI arguments.
      */
